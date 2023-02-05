@@ -1,6 +1,6 @@
 ### usage
 
 ```
-python main
+python main.py
 ```
 
