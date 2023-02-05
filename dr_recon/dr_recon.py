@@ -2,7 +2,7 @@
 Author: tansen
 Date: 2023-02-04 21:26:17
 LastEditors: tansen
-LastEditTime: 2023-02-05 11:13:15
+LastEditTime: 2023-02-05 11:55:24
 '''
 
 import os
@@ -53,25 +53,13 @@ class DataRecon:
             data["期末数"] = data["期末数"].astype(float)
             # get account, opening, closing, amount
             data["account"] = data["被审计单位"] + "_" + data["科目编号"]
-            data["opening"] = data.apply(self.opening, axis=1)
-            data["closing"] = data.apply(self.closing, axis=1)
+            data["opening"] = data.apply(lambda x: x["期初数"] if x["借贷方向"] == "借" else x["期初数"]*-1, axis=1)
+            data["closing"] = data.apply(lambda y: y["期末数"] if y["借贷方向"] == "借" else y["期末数"]*-1, axis=1)
             data["amount"] = None
             print(f"read TB -> {os.path.basename(self.path_tb)} successfully.")
             return data.loc[:, ["account", "opening", "closing", "amount"]]
         except Exception as e:
             print(e)
-
-    def opening(self, row):
-        if row["借贷方向"] == "借":
-            return row["期初数"]
-        if row["借贷方向"] == "贷":
-            return row["期初数"]*-1
-
-    def closing(self, row):
-        if row["借贷方向"] == "借":
-            return row["期末数"]
-        if row["借贷方向"] == "贷":
-            return row["期末数"]*-1
 
     def merge_data(self):
         """ 合并GL和TB """
