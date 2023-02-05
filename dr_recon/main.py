@@ -9,10 +9,10 @@ from dr_recon import DataRecon
 
 
 config_args = {
-    "path_gl": r"C:\Users\hanstan\Desktop\dr\gl.xlsx",  # 序时账的路径
-    "path_tb": r"C:\Users\hanstan\Desktop\dr\tb.xlsx",  # 余额表的路径
+    "path_gl": r"C:\Users\Desktop\dr\gl.xlsx",  # 序时账的路径
+    "path_tb": r"C:\Users\Desktop\dr\tb.xlsx",  # 余额表的路径
     "save_name": "test1",  # 保存的文件名(不用写后缀名)
-    "save_path": r"C:\Users\hanstan\Desktop\dr",  # 保存文件的路径
+    "save_path": r"C:\Users\Desktop\dr",  # 保存文件的路径
 }
 
 
