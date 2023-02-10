@@ -1,0 +1,6 @@
+### Usage
+
+```
+python main.py
+```
+
