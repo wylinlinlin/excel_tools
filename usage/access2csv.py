@@ -1,8 +1,8 @@
 import pypyodbc
 import pandas
-path = r'C:\Users\hanstan\Desktop\497848\12月序时账\12.16-12.31.mdb'  # 数据库文件
+path = r'12.16-12.31.mdb'  # 数据库文件
 table = '3310_20221216_20221231' # table name
-savePath = r'C:\Users\hanstan\Desktop\497848\12月序时账\12.16-12.31.csv'
+savePath = r'12.16-12.31.csv'
 
 
 def getAllColumnName(filePath, tableName):
