@@ -18,4 +18,4 @@ def jpg2pdfByPath(pathName):
 
             jpg2pdf(pathName+'\\'+f)
 
-jpg2pdfByPath(r'C:\\Users\\hanstan\\Desktop\\PD\\submit\\a1')
+jpg2pdfByPath(r'C:\\Users\\Desktop\\submit\\a1')
