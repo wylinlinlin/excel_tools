@@ -8,7 +8,7 @@ from openpyxl.styles import Font
  
 def form_merge():
     """文件合并"""
-    result_path = "C:\\Users\\hanstan\\Desktop\\485496\\科目余额表\\21\\"  # 获取目标文件夹
+    result_path = "C:\\Users\\Desktop\\21\\"  # 获取目标文件夹
     file_list, start_row = [], 0
     for i, j, k in os.walk(result_path):  # 1、遍历获取目标文件夹下的所有xlsx文件
         file_list = k
@@ -30,7 +30,7 @@ def form_merge():
                 
                 sheet.cell(row + start_row, column, value)
         start_row += sheet1.max_row  # 5、当前表写完数据后记住最后的行数，便于下个表续写追加内容
-    lb.save('C:\\Users\\hanstan\\Desktop\\485496\\TB21.xlsx')  # 7、保存表
+    lb.save('C:\\Users\\Desktop\\TB21.xlsx')  # 7、保存表
     print('over')
  
  
