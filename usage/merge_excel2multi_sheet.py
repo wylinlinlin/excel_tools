@@ -2,10 +2,10 @@
 import os
 import pandas as pd
 
-dir = r'C:\Users\hanstan\Desktop\475929\init_data\new_sub\mer'
+dir = r'C:\Users\Desktop\init_data\new_sub\mer'
 origin_file_list = os.listdir(dir)
 
-with pd.ExcelWriter(r'C:\Users\hanstan\Desktop\475929\init_data\new_sub\v3.xlsx') as writer:
+with pd.ExcelWriter(r'C:\Users\Desktop\init_data\new_sub\v3.xlsx') as writer:
     # 循环遍历列表
     for file in range(len(origin_file_list)):
         # 拼接每个文件的路径
