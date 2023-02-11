@@ -4,12 +4,12 @@ import os
 
 target_args = {
     # 需要拆账的文件路径
-    "file_path": r'C:/Users/hanstan/Desktop/434611/mer_save/8files/业务及管理费.csv',
+    "file_path": r'业务及管理费.csv',
     # 筛选条件的文件路径
-    "txt_path": r'C:/Users/hanstan/Desktop/486615/2022-10/code.txt',
-    # "sana_path": r"C:/Users/hanstan/Desktop/486615/2022-10/name.txt",
+    "txt_path": r'code.txt',
+    # "sana_path": r"name.txt",
     # 保存文件的文件路径
-    "out": r'C:/Users/hanstan/Desktop/486615/wyn_sa/by_account',
+    "out": r'C:/Users/Desktop/by_account',
     # 待筛选的列名
     "col1": '机构',
     # "col2": ''
