@@ -83,15 +83,13 @@ class DataRecon:
         try:
             data = self.read_file(self.path_tb)
             data["Account"] = data[self.company_tb] + "_" + data[self.account_tb]
+            data = data.loc[~data[self.account_tb].isnull()]
             if self.is_lastAccount:
-                data = data.loc[~data[self.account_tb].isnull()]
-                data = self.get_value(data)
+                data = self.get_last_account(data)
                 data = data.fillna(0)
                 data[self.opening] = data[self.opening].astype(float)
                 data[self.closing] = data[self.closing].astype(float)
                 if self.is_openDebit:
-                    data[self.open_oth] = data[self.open_oth].astype(float)
-                    data[self.close_oth] = data[self.close_oth].astype(float)
                     data["Opening"] = data[self.opening] - data[self.open_oth]
                     data["Closing"] = data[self.closing] - data[self.close_oth]
                 if not self.is_openDebit:
@@ -153,7 +151,7 @@ class DataRecon:
             idx_z = addcom(idx_z, idx_c)
         return df_cy.loc[idx_z, :]
 
-    def get_value(self, data):
+    def get_last_account(self, data):
         cell = 0
         last_acc = []
         df_col = [col for col in data.columns]
