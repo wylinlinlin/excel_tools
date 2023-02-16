@@ -2,7 +2,7 @@
 Author: tansen
 Date: 2023-02-09 23:46:35
 LastEditors: tansen
-LastEditTime: 2023-02-10 23:04:33
+LastEditTime: 2023-02-16 20:53:18
 '''
 import os
 import numpy as np
@@ -12,19 +12,19 @@ import pandas as pd
 class DataRecon:
     def __init__(
         self, 
-        path_gl,  # gl path
-        path_tb,  # tb path
-        save_name,  # file save name
-        save_path,  # file save path
-        opening,  # opening balance
-        closing,  # closing balance
-        debit,  # debit amount
-        credit,  # credit amount
-        company_gl,  # gl company name
-        company_tb,  # tb company name
-        account_gl,  # gl account code
-        account_tb,  # tb account code
-        position,  # position
+        path_gl: str,  # gl path
+        path_tb: str,  # tb path
+        save_name: str,  # file save name
+        save_path: str,  # file save path
+        opening: str,  # opening balance
+        closing: str,  # closing balance
+        debit: str,  # debit amount
+        credit: str,  # credit amount
+        company_gl: str,  # gl company name
+        company_tb: str,  # tb company name
+        account_gl: str,  # gl account code
+        account_tb: str,  # tb account code
+        position: int,  # position
         is_direction=False,  # 是否有借贷方向,默认无
         is_lastAccount=False,  # 是否取末级科目,默认无
         is_openDebit=False,  # tb是否有借贷,默认无
@@ -54,7 +54,7 @@ class DataRecon:
         self.symbol = symbol
         self.direction = direction
 
-    def read_file(self, file_path):
+    def read_file(self, file_path: str):
         """ read file """
         try:
             data = pd.read_excel(file_path, dtype=object)
@@ -161,13 +161,14 @@ class DataRecon:
                 if data.iloc[cell, self.position-1] == data.iloc[cell+1, self.position-1][:len(data.iloc[cell, self.position-1])]:
                     pass
                 else:
-                    last_acc.append(data.iloc[cell, self.position-1])
+                    # last_acc.append(data.iloc[cell, self.position-1])
+                    last_acc.append(data.iloc[cell, data.columns.get_loc("Account")])
                 cell += 1
             except:
                 break
         last_acc.append(data.iloc[len(data)-1, self.position-1])
         cd = {
-            self.account_tb: last_acc
+            "Account": last_acc
         }
         data = self.df_screen(data_fr, cd)
         return data
