@@ -1,19 +1,11 @@
-# excel_tools
-A small tool used to solve excel
+# excel tools
+> A small tool used to solve excel
 
-### dataRecon
-```
-It's used for all recon.
-```
+### dataRecon (python)
+* It's used for all recon.
 
-### dr_recon
-```
-use python
-It's used for DR recon.
-```
+### dr_recon (python)
+* It's used for DR recon.
 
-### mergeExel
-```
-use Golang
-merge excel file.
-```
+### mergeExel (golang)
+* merge excel or csv file.
