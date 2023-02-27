@@ -1,3 +1,9 @@
+'''
+Author: tansen
+Date: 2023-02-27 22:19:54
+LastEditors: tansen
+LastEditTime: 2023-02-27 23:36:25
+'''
 import os
 from typing import Union
 
@@ -39,8 +45,8 @@ class JET:
     def pivot(
         df: DataFrame,
         index: Union[str, list[str]],
-        values: list[str],
-        path: str = "pt.xlsx"
+        values: Union[str, list[str]],
+        path: str = "pt.xlsx",
     ) -> list:
         pt = pd.pivot_table(
             df,
@@ -48,7 +54,6 @@ class JET:
             values=values,
             aggfunc=np.sum)
         pt.insert(loc=0, column="Account", value=pt.index)
-        pt["notes"] = "nil"
         pt.to_excel(path, index=False, encoding="gbk")
         print(f"\033[36msave path -> '{path}'\033[0m")
         return pt["Account"].unique().tolist()
@@ -108,17 +113,18 @@ class JET:
 if __name__ == "__main__":
     jet = JET()
     df = jet.read(path=r"", )
-    
+
     def gl():
-        pt = jet.pivot(dataframe=df, index=[""], values=[""], path=r"")
+        df["Account"] = df["entity"] + "_" + df["account"]
+        pt = jet.pivot(dataframe=df, index=["Account"], values=[""], path=r"")
         cd = {
-            "": pt
+            "Account": pt
         }
         df_col = [col for col in df.columns]
         data_fr = pd.DataFrame(df, columns=df_col)
         df = jet.screen(df, cd)
         df.to_excel()
-    
+
     def tb():
         df = jet.get_last_account(df)
         df.to_excel()
