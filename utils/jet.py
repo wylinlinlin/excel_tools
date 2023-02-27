@@ -66,7 +66,7 @@ class JET:
         account: str = "account"
     ) -> DataFrame:
         """ get last account """
-        df["Account"] = df["entity"] + "_" + df["account"]
+        df["Account"] = df[entity] + "_" + df[account]
         cell = 0
         last_acc = []
         df_col = [col for col in df.columns]
