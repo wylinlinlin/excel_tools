@@ -2,7 +2,7 @@
 Author: tansen
 Date: 2023-02-27 22:19:54
 LastEditors: Please set LastEditors
-LastEditTime: 2023-03-01 00:26:35
+LastEditTime: 2023-03-01 00:32:16
 '''
 import os
 from typing import Union
@@ -81,7 +81,7 @@ class JET:
         location: int = 1,  # entity_account of column
         en_acc: str = "enacc"  # entity_account
     ) -> list:
-        """ get last account """
+        """ get end-level account """
         cell = 0
         last_acc = []
         while cell < len(df)-1:
@@ -94,7 +94,7 @@ class JET:
             except:
                 break
         last_acc.append(df.iloc[len(df)-1, location-1])  # append last account
-        print("\033[1;32mget last account successfully.\033[0m")
+        print("\033[1;32mget end-level account successfully.\033[0m")
         return last_acc
 
     @staticmethod
