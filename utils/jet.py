@@ -1,8 +1,8 @@
 '''
 Author: tansen
 Date: 2023-02-27 22:19:54
-LastEditors: tansen
-LastEditTime: 2023-02-27 23:36:25
+LastEditors: Please set LastEditors
+LastEditTime: 2023-03-01 00:26:35
 '''
 import os
 from typing import Union
@@ -26,20 +26,37 @@ class JET:
         usecols: Union[str, list, None] = None
     ) -> DataFrame:
         """ read file """
-        try:
+        file_extension = os.path.splitext(path)[-1]
+        if file_extension.lower() == ".xlsx":
             df = pd.read_excel(
                 path,
                 dtype=dtype,
                 skiprows=skiprows,
                 usecols=usecols)
-        except:
+        else:
             df = pd.read_csv(
-                file_path,
+                path,
                 dtype=dtype,
                 sep=sep,
                 encoding=encoding)
         print("\033[1;32mread successfully.\033[0m")
         return df
+    
+    @staticmethod
+    def write(
+        df: DataFrame,
+        rows: int = 70_0000,
+        path: str = "saveFile"
+    ) -> None:
+        try:
+            if len(df) <= rows:
+                df.to_excel(f"{path}.xlsx", index=False, encoding="gbk")
+                print(f"\033[36m'{os.path.basename(path)}.xlsx' is saved.\033[0m")
+            else:
+                df.to_csv(f"{path}.csv", index=False, encoding="utf-8")
+                print(f"\033[36m'{os.path.basename(path)}.csv' is saved.\033[0m")
+        except Exception as e:
+            print(f"Save Error: {e}.")
 
     @staticmethod
     def pivot(
@@ -56,38 +73,29 @@ class JET:
         pt.insert(loc=0, column="Account", value=pt.index)
         pt.to_excel(path, index=False, encoding="gbk")
         print(f"\033[36msave path -> '{path}'\033[0m")
-        return pt["Account"].unique().tolist()
+        return pt.index.unique().tolist()
 
     @staticmethod
     def get_last_account(
         df: DataFrame,
-        position: int = 2,  # account code of column
-        entity: str = "entity",
-        account: str = "account"
-    ) -> DataFrame:
+        location: int = 1,  # entity_account of column
+        en_acc: str = "enacc"  # entity_account
+    ) -> list:
         """ get last account """
-        df["Account"] = df[entity] + "_" + df[account]
         cell = 0
         last_acc = []
-        df_col = [col for col in df.columns]
-        data_fr = pd.DataFrame(df, columns=df_col)
         while cell < len(df)-1:
             try:
-                if df.iloc[cell, position-1] == df.iloc[cell+1, position-1][:len(df.iloc[cell, position-1])]:
+                if df.iloc[cell, location-1] == df.iloc[cell+1, location-1][:len(df.iloc[cell, location-1])]:
                     pass
                 else:
-                    last_acc.append(
-                        df.iloc[cell, df.columns.get_loc("Account")])
+                    last_acc.append(df.iloc[cell, df.columns.get_loc(en_acc)])
                 cell += 1
             except:
                 break
-        last_acc.append(df.iloc[len(df)-1, position-1])
-        cd = {
-            "Account": last_acc
-        }
-        df = df_screen(data_fr, cd)
+        last_acc.append(df.iloc[len(df)-1, location-1])  # append last account
         print("\033[1;32mget last account successfully.\033[0m")
-        return df
+        return last_acc
 
     @staticmethod
     def screen(df: DataFrame, cd: dict) -> DataFrame:
@@ -112,7 +120,10 @@ class JET:
 
 if __name__ == "__main__":
     jet = JET()
-    df = jet.read(path=r"", )
+    df = jet.read(path=r"E:\Desktop\test_data\demo.xlsx", )
+    d = jet.get_last_account(df)
+    print(d)
+    
 
     def gl():
         df["Account"] = df["entity"] + "_" + df["account"]
