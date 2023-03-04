@@ -7,5 +7,5 @@
 ### dr_recon (python)
 * It's used for DR recon.
 
-### mergeExel (golang)
-* merge excel or csv file.
+### jet (python)
+* create JET template
