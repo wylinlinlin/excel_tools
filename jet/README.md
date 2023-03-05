@@ -26,6 +26,7 @@ Function
   * 转换日期格式为 *dd/mm/yyyy*
   * 保留2位小数
   * 去除特殊字符与保留前200 *Line Description*
+  * 汉字转拼音
 
 * `calculation_sum`:
   * 计算 *debit*、*credit*、*amount* 的加总
