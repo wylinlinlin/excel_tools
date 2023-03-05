@@ -1,8 +1,8 @@
 '''
 Author: XiaZeCheng
 Date: 2023-03-02 20:01:08
-LastEditors: tansen
-LastEditTime: 2023-03-04 22:42:29
+LastEditors: Please set LastEditors
+LastEditTime: 2023-03-05 11:36:40
 '''
 
 import re
@@ -12,6 +12,7 @@ from typing import Union
 import numpy as np
 import pandas as pd
 from rich.progress import track
+from pypinyin import pinyin, Style
 from pandas.core.frame import DataFrame
 
 
@@ -151,9 +152,12 @@ class JournalsTemplate():
         dateEffective: str = "Date Effective",
         dateEntered: str = "Date Entered",
         lineDescription: str = "Line Description",
+        journalNumber: str = "Journal Number",
+        py_type: str = "upper",  # upper, lower, captial, abbre
         is_convertDate: bool = False,  # convert date format to dd/mm/yyyy
         is_retain2decimals: bool = False,  # retain 2 decimals
         is_processStrings: bool = False,  # clear special symbols, limit string length
+        is_pinyin: bool = False,  # convert chinese to pinyin
     ) -> DataFrame:
         """ convert format """
         if is_convertDate:
@@ -171,6 +175,22 @@ class JournalsTemplate():
             df[lineDescription] = df[lineDescription].apply(lambda x: re.sub("\W", "", x))
             df[lineDescription] = df[lineDescription].apply(lambda x: x[: 200])
             print("\033[1;32mclear special symbols and limits string length successfully.\033[0m")
+        if is_pinyin:
+            df[journalNumber] = df[journalNumber].astype(str)
+            for value in df[journalNumber]:
+                py_single = pinyin(value, style=Style.NORMAL)
+                py_mutiple = [value[0] for value in py_single]
+                if py_type == "upper":
+                    py_result = ''.join([i.upper() for i in py_mutiple])
+                if py_type == "lower":
+                    py_result = ''.join([i.lower() for i in py_mutiple])
+                if py_type == "captial":
+                    py_result = py_mutiple[0].capitalize() + ''.join(py_mutiple[1:])
+                # 缩写
+                if py_type == "abbre":
+                    py_result = ''.join([i[0].upper() for i in py_mutiple])
+                df.replace(value, py_result, inplace=True)
+            print("\033[1;32mconvert pinyin successfully.\033[0m")
         return df
     
     @staticmethod
