@@ -5,6 +5,7 @@
 Need pip
 
 * `pip install rich`
+* `pip install pypinyin`
 
 Usage
 
