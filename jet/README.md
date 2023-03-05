@@ -23,12 +23,12 @@ Function
   * 数据透视
   * Net 2 Zero
 * `convert_format`: 
-  * 转换日期格式为dd/mm/yyyy,
+  * 转换日期格式为 *dd/mm/yyyy*
   * 保留2位小数
   * 去除特殊字符与保留前200 *Line Description*
 
 * `calculation_sum`:
-  * 计算*debit*、*credit*、*amount*的加总
+  * 计算 *debit*、*credit*、*amount* 的加总
 
 * `sort_add`:
   * 根据 *Journal Number* 排序
