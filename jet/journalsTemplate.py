@@ -139,10 +139,11 @@ class JournalsTemplate():
         if is_pivot:
             pt.insert(loc=0, column="Account", value=pt.index)
             pt.to_excel(f"{save_path}/pivot.xlsx", index=False)
-            print("\033[1;32mpivot save file path: {save_path}\\pivot.xlsx\033[0m")
+            print(f"\033[1;32mpivot save file path: {save_path}\\pivot.xlsx\033[0m")
         if is_net2zero:
-            pt.to_excel(f"{save_path}/net2zero.xlsx")
-            print("\033[1;32mnet2zero save file path: {save_path}\\net2zero.xlsx\033[0m")
+            pt.reset_index(inplace=True)
+            pt.to_excel(f"{save_path}/net2zero.xlsx", index=False)
+            print(f"\033[1;32mnet2zero save file path: {save_path}\\net2zero.xlsx\033[0m")
     
     @staticmethod
     def convert_format(
@@ -233,7 +234,7 @@ class JournalsTemplate():
             df[lineNumber] = lst
             print("\033[1;32madd Line Number successfully.\033[0m")
         if is_addFperiod:
-            df[financialPeriod] = df["Date Effective"].str.split("/")[1]
+            df[financialPeriod] = df["Date Effective"].str.split("/").str[1]
             df[financialPeriod] = df[financialPeriod].astype("uint8")
             print("\033[1;32madd Financial Period successfully.\033[0m")
         return df
@@ -304,7 +305,6 @@ class JournalsTemplate():
             with open("config/columnName.txt", "r", encoding="utf-8") as fp:
                 column_names = fp.readlines()
             list_cs = [column_name.strip("\n") for column_name in column_names]
-            # insert column
             print("\033[1;32mget columns successfully.\033[0m")
             return df.loc[:, list_cs]
         except Exception:
