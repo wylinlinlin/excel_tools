@@ -223,12 +223,16 @@ class JournalsTemplate():
             df = df.sort_values(by=journalNumber, ascending=ascending, ignore_index=True)
             print("\033[1;32msort value successfully.\033[0m")
         if is_addLnumber:
-            df[lineNumber] = int(1)
+            lst = [1]
+            value = int(1)
             for value in track(range(1, len(df))):
                 if df[journalNumber][value] == df[journalNumber][value-1]:
-                    df[lineNumber][value] = df[lineNumber][value-1] + 1
+                    value+=1
+                    lst.append(value)
                 else:
-                    df[lineNumber][value] = 1
+                    value = 1
+                    lst.append(value)
+            df[lineNumber] = lst
             print("\033[1;32madd Line Number successfully.\033[0m")
         if is_addFperiod:
             df[financialPeriod] = df["Date Effective"].str.split("/")[1]
