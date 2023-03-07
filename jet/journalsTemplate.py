@@ -23,7 +23,6 @@ class JournalsTemplate():
     def __init__(self) -> None:
         pass
     
-    '''
     @staticmethod
     def insert_column(
         df: DataFrame
@@ -41,7 +40,6 @@ class JournalsTemplate():
             return df
         except Exception:
             print("\033[31;1mError: columnName.txt not found.\033[0m")
-    '''
 
     @staticmethod
     def reset_column(
@@ -224,13 +222,13 @@ class JournalsTemplate():
             print("\033[1;32msort value successfully.\033[0m")
         if is_addLnumber:
             lst = [1]
-            value = int(1)
+            val = int(1)
             for value in track(range(1, len(df))):
                 if df[journalNumber][value] == df[journalNumber][value-1]:
-                    value+=1
+                    val += 1
                     lst.append(value)
                 else:
-                    value = 1
+                    val = 1
                     lst.append(value)
             df[lineNumber] = lst
             print("\033[1;32madd Line Number successfully.\033[0m")
@@ -347,26 +345,35 @@ class JournalsTemplate():
             else:
                 print("\033[1;31mError: please check debit credit and amount column.\033[0m")
         if is_mi:
-            ami = df[mi].unique().tolist()
-            if pd.isna(ami):
-                print("\033[1;31mError: [Auto Manual or Interface] column is null.\033[0m")
-            else:
-                print(f"\033[1;34m[Auto Manual or Interface] -> {ami}\033[0m")
+            try:
+                ami = df[mi].unique().tolist()
+                if pd.isna(ami):
+                    print("\033[1;31mError: [Auto Manual or Interface] column is null.\033[0m")
+                else:
+                    print(f"\033[1;34m[Auto Manual or Interface] -> {ami}\033[0m")
+            except Exception:
+                print("\033[1;31mError: [Auto Manual or Interface] column is incorrect.\033[0m")
         if is_negative:
-            uni_d = df[debit].unique().tolist()
-            uni_c = df[credit].unique().tolist()
-            neg_d = [value for value in uni_d if value < 0]
-            neg_c = [value for value in uni_c if value < 0]
-            if len(neg_d) == 0 and len(neg_c) == 0:
-                print("\033[1;32mno negative number.\033[0m")
-            else:
-                print("\033[1;31mError: there are negative numbers.\033[0m")
+            try:
+                uni_d = df[debit].unique().tolist()
+                uni_c = df[credit].unique().tolist()
+                neg_d = [value for value in uni_d if value < 0]
+                neg_c = [value for value in uni_c if value < 0]
+                if len(neg_d) == 0 and len(neg_c) == 0:
+                    print("\033[1;32mno negative number.\033[0m")
+                else:
+                    print("\033[1;31mError: there are negative numbers.\033[0m")
+            except Exception:
+                print("\033[1;31mError: [Signed Amount EC]... column is incorrect.\033[0m")
         if is_month:
-            month = df[fp].unique().tolist()
-            if pd.isna(month):
-                print("\033[1;31mError: [Financial Period] column is null.\033[0m")
-            else:
-                print(f"\033[1;34m[Financial Period] -> {month}\033[0m")
+            try:
+                month = df[fp].unique().tolist()
+                if pd.isna(month):
+                    print("\033[1;31mError: [Financial Period] column is null.\033[0m")
+                else:
+                    print(f"\033[1;34m[Financial Period] -> {month}\033[0m")
+            except Exception:
+                print("\033[1;31mError: [Financial Period] column is incorrect.\033[0m")
         if is_entity:
             ent = df[entity].unique().tolist()
             if pd.isna(ent):
@@ -374,9 +381,12 @@ class JournalsTemplate():
             else:
                 print(f"\033[1;34m[Entity] -> {ent}\033[0m")
         if is_currency:
-            curr = df[currency].unique().tolist()
-            curr_ec = df[currencyEC].unique().tolist()
-            if pd.isna(curr) or pd.isna(curr_ec):
-                print("\033[1;31mError: [Currency] or [Currency EC] column is null.\033[0m")
-            else:
-                print(f"\033[1;34m[currency] -> {curr}\n[Currency EC] -> {curr_ec}\033[0m")
+            try:
+                curr = df[currency].unique().tolist()
+                curr_ec = df[currencyEC].unique().tolist()
+                if pd.isna(curr) or pd.isna(curr_ec):
+                    print("\033[1;31mError: [Currency] or [Currency EC] column is null.\033[0m")
+                else:
+                    print(f"\033[1;34m[currency] -> {curr}\n[Currency EC] -> {curr_ec}\033[0m")
+            except Exception:
+                print("\033[1;31mError: [Currency EC] or [Currency] column is incorrect.\033[0m")
