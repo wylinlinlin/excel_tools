@@ -146,6 +146,6 @@ df.unique(subset=["col1", "col2"])
 ```python
 df.with_columns(pl.col("col_name").cast(pl.Int32))  # int32
 df.with_columns(pl.col("col_name").cast(pl.Float64))  # float64
-df.with_columns(pl.col("col_name").cast(pl.Utf))
+df.with_columns(pl.col("col_name").cast(pl.Utf))  # str
 ```
 
