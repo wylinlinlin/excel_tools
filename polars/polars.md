@@ -139,6 +139,9 @@ df.sort("c", "a", descending=[False, True])  # r -> df
 ```python
 df.unique(subset="col_name")
 df.unique(subset=["col1", "col2"])
+
+df.select(pl.col("CMTE_ID").unique())
+df.select(pl.col("CMTE_ID").unique()).to_dict()["CMTE_ID"].to_list()
 ```
 
 #### 17. dtype
